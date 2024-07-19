@@ -1,0 +1,20 @@
+[Database]
+data_path               = ""                        # 数据文件的路径， 无用
+fs                      = 30000                     # 采样率（Hz）
+extract_time_potin      = 1.5                       # 提出数据的时间点
+time_length             = 1                         # 使用数据末尾的时间长度（秒）
+down_sampling_fs        = 2000                      # 降采样后的频率（Hz）
+filter                  = ["high", "15"]            # 滤波器类型和参数，格式为 [滤波器类型, 截止频率]
+notch_freq              = [50, 100, 150, 200]       # 陷波滤波器的频率列表，用于去除特定频率的干扰
+channel                 = [1, 2, 3, 4, 5, 6, 7, 8, 9]
+
+[Analysis]
+feature                 = "time"
+signal_step             = 0.005                # 信号步长（秒），用于信号处理窗口的步长
+signal_overlap          = 0                    # 信号重叠比例，用于信号处理窗口的重叠比例
+
+
+[Decoder]
+decoder_path     = "E:/EMG_online/python/config/svm_model.pkl"  # 解码器文件的路径
+
+
