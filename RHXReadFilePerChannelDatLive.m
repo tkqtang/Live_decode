@@ -13,6 +13,28 @@
 % Set up main UI
 create_main_ui();
 
+
+
+%%
+function call(data, time, interval)
+    if nargin < 3
+        interval = 2;
+    end
+    persistent last_t;
+    if isempty(last_t)
+        last_t = 0;
+    end
+    current_t   = time(length(time), 1);
+    if abs(current_t - last_t - interval) <= 0.01 || current_t > last_t + interval
+        py_path     = fullfile(pwd, 'python');
+        config_path = fullfile(pwd, 'python/config/settings.toml'); 
+        y_pred      = call_decoder(py_path, config_path, data);
+        fprintf('time: %4d      result: %2d\n', round(current_t), y_pred);
+        last_t      = current_t; 
+    end
+end
+%%
+
 % When 'start' is clicked - begin realtime reading and plotting
 function start(button_group)
 
@@ -70,23 +92,7 @@ end
 
 end
 
-function call(data, time, interval)
-    if nargin < 3
-        interval = 2;
-    end
-    persistent last_t;
-    if isempty(last_t)
-        last_t = 0;
-    end
-    current_t   = time(length(time), 1);
-    if abs(current_t - last_t - interval) <= 0.01 || current_t > last_t + interval
-        py_path     = fullfile(pwd, 'python');
-        config_path = fullfile(pwd, 'python/config/settings.toml'); 
-        y_pred      = call_decoder(py_path, config_path, data);
-        fprintf('time: %4d      result: %2d\n', round(current_t), y_pred);
-        last_t      = current_t; 
-    end
-end
+
 
 % When 'stop' is clicked - stop realtime reading and plotting
 function stop()
