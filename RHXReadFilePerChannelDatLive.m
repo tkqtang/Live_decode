@@ -79,7 +79,7 @@ function call(data, time, interval)
         last_t = 0;
     end
     current_t   = time(length(time), 1);
-    if abs(current_t - last_t - interval) <= 0.01
+    if abs(current_t - last_t - interval) <= 0.01 || current_t > last_t + interval
         py_path     = fullfile(pwd, 'python');
         config_path = fullfile(pwd, 'python/config/settings.toml'); 
         y_pred      = call_decoder(py_path, config_path, data);
